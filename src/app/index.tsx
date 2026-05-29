@@ -1,6 +1,5 @@
 import { useRouter } from 'expo-router';
-import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 export default function Home() {
   const router = useRouter();
   return (
@@ -12,9 +11,13 @@ export default function Home() {
         <Text style={styles.subtitle}>A rua dita a moda.</Text>
       </View>
 
-      {/* Espaço reservado para a futura imagem de destaque (ex: um tênis ou modelo) */}
-      <View style={styles.imagePlaceholder}>
-        <Text style={styles.placeholderText}>[ IMAGEM DA COLEÇÃO AQUI ]</Text>
+          {/* Imagem de Destaque da Coleção */}
+        <View style={styles.imageContainer}>
+        <Image 
+          source={{ uri: 'https://images.unsplash.com/photo-1552346154-21d32810baa3?q=80&w=800&auto=format&fit=crop' }} 
+          style={styles.heroImage}
+          resizeMode="cover"
+        />
       </View>
 
       <TouchableOpacity 
@@ -84,5 +87,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '900',
     letterSpacing: 2,
+  },
+
+  imageContainer: {
+    width: '100%',
+    height: 380, // Altura obrigatória para a imagem aparecer
+    borderRadius: 12, // Bordas arredondadas para um visual moderno
+    overflow: 'hidden', // Garante que a imagem respeite a borda arredondada
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  heroImage: {
+    width: '100%',
+    height: '100%',
   },
 });
