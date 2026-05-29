@@ -1,98 +1,88 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
+import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function Home() {
+  const router = useRouter();
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      
+      <View style={styles.header}>
+        <Text style={styles.title}>GUETO WEAR</Text>
+        <Text style={styles.subtitle}>A rua dita a moda.</Text>
+      </View>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      {/* Espaço reservado para a futura imagem de destaque (ex: um tênis ou modelo) */}
+      <View style={styles.imagePlaceholder}>
+        <Text style={styles.placeholderText}>[ IMAGEM DA COLEÇÃO AQUI ]</Text>
+      </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <TouchableOpacity 
+        style={styles.button} 
+        activeOpacity={0.8}
+        onPress={() => router.push('/colecao')}>
+        <Text style={styles.buttonText}>VER COLEÇÃO</Text>
+      </TouchableOpacity>
+      
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
+    backgroundColor: '#121212', 
     alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    justifyContent: 'space-between', 
+    paddingVertical: 60, 
+    paddingHorizontal: 20,
   },
-  heroSection: {
+  header: {
     alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    marginTop: 40,
   },
   title: {
-    textAlign: 'center',
-  },
-  code: {
+    fontSize: 40,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    letterSpacing: 2,
     textTransform: 'uppercase',
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  subtitle: {
+    fontSize: 16,
+    color: '#888888',
+    marginTop: 8,
+    fontWeight: '500',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  imagePlaceholder: {
+    width: '100%',
+    height: 350,
+    backgroundColor: '#1E1E1E',
+    borderWidth: 2,
+    borderColor: '#333333',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8, // Bordas levemente arredondadas
+  },
+  placeholderText: {
+    color: '#555555',
+    fontWeight: 'bold',
+    letterSpacing: 2,
+  },
+  button: {
+    backgroundColor: '#FFFFFF',
+    width: '100%',
+    paddingVertical: 18,
+    alignItems: 'center',
+    borderRadius: 4,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: '900',
+    letterSpacing: 2,
   },
 });
